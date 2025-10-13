@@ -58,13 +58,25 @@
           @error('warehouse_id') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
 
-        {{-- Batch Code --}}
+        {{-- Suppliers --}}
         <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Supplier</label>
+          <select name="supplier_id" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <option value="">Select Supplier</option>
+            @foreach ($suppliers as $supp)
+              <option value="{{ $supp->id }}">{{ $supp->name }}</option>
+            @endforeach
+          </select>
+          @error('supplier_id') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        {{-- Batch Code --}}
+        {{-- <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Batch Code</label>
           <input type="text" name="batch_code" placeholder="e.g. RM-2025-001"
-                 class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                 class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-indigo-500">
           @error('batch_code') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
-        </div>
+        </div> --}}
 
         {{-- Quantity --}}
         <div>

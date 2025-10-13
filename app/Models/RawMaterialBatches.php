@@ -24,6 +24,23 @@ class RawMaterialBatches extends Model
         'received_date' => 'date',
     ];
 
+    public static function generateCode()
+    {
+        $prefix = 'RM-' . now()->format('Ymd') . '-';
+        $lastCode = self::where('batch_code', 'like', $prefix . '%')
+            ->orderBy('batch_code', 'desc')
+            ->value('batch_code');
+
+        if ($lastCode) {
+            $lastNumber = (int) substr($lastCode, -3);
+            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '001';
+        }
+
+        return $prefix . $nextNumber;
+    }
+
     public function supplier()
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');

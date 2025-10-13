@@ -38,21 +38,6 @@ Route::middleware(['auth'])->group(function () {
             ->name('dashboard.manager');
     });
 
-    // Route::middleware(['role.dept:staff,production'])->group(function () {
-    //     // Production staff routes
-    //     Route::get('/staff/production', [ProductionStaffController::class, 'index'])->name('production.index');
-    //     Route::get('/staff/production/create', [ProductionStaffController::class, 'create'])->name('production.create');
-    //     Route::get('/staff/production/{id}', [ProductionStaffController::class, 'show'])->name('production.show');
-
-    //     Route::post('/staff/production', [ProductionStaffController::class, 'store'])->name('production.store');
-    //     Route::put('/staff/production/{id}', [ProductionStaffController::class, 'update'])->name('production.update');
-    //     Route::delete('/staff/production/{id}', [ProductionStaffController::class, 'destroy'])->name('production.destroy');
-
-    //     Route::post('/staff/production/{id}/add-material', [ProductionStaffController::class, 'addMaterial'])->name('production.addMaterial');
-    //     Route::post('/staff/production/{id}/start', [ProductionStaffController::class, 'start'])->name('production.start');
-    //     Route::post('/staff/production/{id}/complete', [ProductionStaffController::class, 'complete'])->name('production.complete');
-    // });
-
     // Staff only
     Route::middleware(['role.dept:staff,production'])->prefix('production')->group(function () {
         // List & Details
@@ -75,29 +60,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/materials', [ProductionController::class, 'recordMaterials'])->name('production.record-materials');
     });
 
-    // Route::middleware(['role.dept:staff,qc'])->group(function () {
-    //     // QC staff routes
-    //     Route::get('/staff/qc', [QCStaffController::class, 'index'])->name('qc.index');
-    //     Route::get('/staff/qc/{id}', [QCStaffController::class, 'show'])->name('qc.show');
-    //     Route::post('/staff/qc/{id}/inspect', [QCStaffController::class, 'inspect'])->name('qc.inspect');
-    //     Route::get('/staff/qc/logs', [QCStaffController::class, 'logs'])->name('qc.logs');
-    // });
-
     Route::middleware(['role.dept:staff,qc'])->prefix('qc')->group(function () {
         Route::get('/', [QCController::class, 'index'])->name('qc.index');
         Route::get('/review/{id}', [QCReviewController::class, 'show'])->name('qc.review.show');
         Route::post('/review/{id}', [QCReviewController::class, 'store'])->name('qc.review.store');
         Route::get('/logs', [QCLogController::class, 'index'])->name('qc.logs');
     });
-
-    // Route::middleware(['role.dept:staff,warehouse'])->group(function () {
-    //     // Warehouse staff routes
-    //     Route::get('/staff/warehouse/', [WarehouseStaffController::class, 'index'])->name('warehouse.index');
-    //     Route::get('/staff/warehouse/inventory', [WarehouseStaffController::class, 'inventory'])->name('warehouse.inventory');
-    //     Route::post('/staff/warehouse/stock-in', [WarehouseStaffController::class, 'stockIn'])->name('stock.in');
-    //     Route::post('/staff/warehouse/stock-out', [WarehouseStaffController::class, 'stockOut'])->name('stock.out');
-    //     Route::get('/staff/warehouse/raw/{id}/available', [WarehouseStaffController::class, 'availableForBatch'])->name('raw.available');
-    // });
 
     Route::middleware(['role.dept:staff,warehouse'])->prefix('warehouse')->group(function () {
         Route::get('/stock', [StockController::class, 'index'])->name('warehouse.stock.index');
