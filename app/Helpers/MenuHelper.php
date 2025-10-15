@@ -41,10 +41,26 @@ class MenuHelper
 
       case 'manager':
         $menus = [
-          ['name' => 'Dashboard', 'icon' => 'squares-2x2', 'route' => 'dashboard'],
-          ['name' => 'Production Plans', 'icon' => 'calendar-days', 'route' => 'plans.index'],
-          ['name' => 'Reports', 'icon' => 'chart-bar', 'route' => 'reports.index'],
-          ['name' => 'Team Overview', 'icon' => 'users', 'route' => 'teams.index'],
+          [
+            'name' => 'Dashboard',
+            'route' => 'manager.dashboard',
+            'icon' => 'squares-2x2',
+          ],
+          [
+            'name' => 'Production Monitoring',
+            'route' => 'manager.production.index',
+            'icon' => 'boxes',
+          ],
+          [
+            'name' => 'QC Overview',
+            'route' => 'manager.qc.index',
+            'icon' => 'check-circle',
+          ],
+          [
+            'name' => 'Material Usage',
+            'route' => 'manager.materials.index',
+            'icon' => 'chart-bar',
+          ],
         ];
         break;
 

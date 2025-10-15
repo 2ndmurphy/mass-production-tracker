@@ -11,6 +11,7 @@ use App\Http\Controllers\Staff\Warehouse\{
 };
 use App\Http\Controllers\Staff\QC\{QCController, QCReviewController, QCLogController};
 use App\Http\Controllers\Staff\Production\ProductionController;
+use App\Http\Controllers\Manager\ManagerController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +34,21 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Manager only
-    Route::middleware(['role.dept:manager'])->group(function () {
-        Route::get('/dashboard/manager', [DashboardController::class, 'manager'])
-            ->name('dashboard.manager');
+    Route::middleware(['role.dept:manager'])->prefix('manager')->name('manager.')->group(function () {
+        // Dashboard overview
+        Route::get('/dashboard', [ManagerController::class, 'dashboard'])->name('dashboard');
+
+        // Production monitoring
+        Route::get('/production', [ManagerController::class, 'production'])->name('production.index');
+        Route::resource('production', ProductionController::class)->only(['show'])->names([
+            'show' => 'production.show'
+        ]);
+
+        // QC overview
+        Route::get('/qc', [ManagerController::class, 'qc'])->name('qc.index');
+
+        // Material usage summary
+        Route::get('/materials', [ManagerController::class, 'materials'])->name('materials.index');
     });
 
     // Staff only

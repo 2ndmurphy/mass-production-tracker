@@ -13,16 +13,16 @@ class RedirectHelper
 
         switch ($role) {
             case 'admin':
-                return redirect()->route('dashboard.admin');
+                return route('dashboard.admin');
             case 'manager':
-                return redirect()->route('dashboard.manager');
+                return route('manager.dashboard');
             case 'staff':
                 if ($dept === 'production') {
-                    return redirect()->route('production.index');
+                    return route('production.index');
                 } elseif ($dept === 'qc') {
-                    return redirect()->route('qc.index');
+                    return route('qc.index');
                 } elseif ($dept === 'warehouse') {
-                    return redirect()->route('warehouse.stock.index');
+                    return route('warehouse.stock.index');
                 } else {
                     return abort(403);
                 }
