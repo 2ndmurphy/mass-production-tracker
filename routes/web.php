@@ -2,12 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Staff\ProductionStaffController;
 use App\Http\Controllers\Staff\Warehouse\{
+    WarehouseController,
     StockController,
     InventoryController,
     BatchController,
-    MovementController
 };
 use App\Http\Controllers\Staff\QC\{QCController, QCReviewController, QCLogController};
 use App\Http\Controllers\Staff\Production\ProductionController;
@@ -90,6 +89,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/batches', [BatchController::class, 'index'])->name('warehouse.batches.index');
         Route::get('/batches/{id}', [BatchController::class, 'show'])->name('warehouse.batches.show');
 
-        Route::get('/movements', [MovementController::class, 'index'])->name('warehouse.movements.index');
+        // Route::get('/movements', [MovementController::class, 'index'])->name('warehouse.movements.index');
     });
 });

@@ -130,6 +130,8 @@ class ProductionController extends Controller
             ]);
         }
 
+
+
         return redirect()->route('production.show', $production->id)->with('success', 'Materials recorded successfully.');
     }
 }

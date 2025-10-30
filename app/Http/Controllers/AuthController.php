@@ -17,6 +17,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $user = Auth::user();
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -26,7 +28,27 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // Redirect sesuai role
-            return RedirectHelper::redirectToDashboard(Auth::user());
+            $role = strtolower($user->role->name);
+            $dept = strtolower(optional($user->department)->name);
+
+            switch ($role) {
+                case 'admin':
+                    return redirect()->route('dashboard.admin');
+                case 'manager':
+                    return redirect()->route('manager.dashboard');
+                case 'staff':
+                    if ($dept === 'production') {
+                        return redirect()->route('production.index');
+                    } elseif ($dept === 'qc') {
+                        return redirect()->route('qc.index');
+                    } elseif ($dept === 'warehouse') {
+                        return redirect()->route('warehouse.stock.index');
+                    } else {
+                        return abort(403);
+                    }
+                default:
+                    return redirect('/login');
+            }
         }
 
         return back()->withErrors([
